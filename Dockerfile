@@ -1,7 +1,9 @@
-FROM alpine:latest
+FROM alpine:3.6
 RUN apk --no-cache --update add apache2 apache2-utils php5-apache2 php5-xml php5-openssl openssl curl
-RUN	mkdir /run/apache2
+RUN mkdir /run/apache2
 ADD etc/apache2/conf.d/dokuwiki.conf /etc/apache2/conf.d
+RUN sed -i.bak 's/\(apache:x\):\([[:digit:]]*\):\(.*\)/\1:20000:\3/g' /etc/passwd
+RUN find -user 20000 -exec chown -h apache {} \;
 RUN chown -R apache:apache /var/www/localhost/htdocs
 ENTRYPOINT /usr/sbin/apachectl -D FOREGROUND
 EXPOSE 80
