@@ -1,5 +1,5 @@
-FROM alpine:3.6
-RUN apk --no-cache --update add apache2 apache2-utils php5-apache2 php5-xml php5-openssl openssl curl
+FROM alpine:3.5
+RUN apk --no-cache --update add apache2 apache2-utils php5-apache2 php5-xml php5-openssl php5-zlib openssl curl vim
 RUN mkdir /run/apache2
 ADD etc/apache2/conf.d/dokuwiki.conf /etc/apache2/conf.d
 RUN sed -i.bak 's/\(apache:x\):\([[:digit:]]*\):\(.*\)/\1:20000:\3/g' /etc/passwd
